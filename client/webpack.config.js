@@ -1,9 +1,8 @@
 const path = require('path');
-// let HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-// __webpack_base_uri__ = 'http://localhost:9000';
+const webpack_port = 9000
 
 
 let conf ={
@@ -23,7 +22,7 @@ let conf ={
         client: {   
             overlay: true,
         },
-         port:9000,
+         port:webpack_port,
          historyApiFallback: true
 
     },

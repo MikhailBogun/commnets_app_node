@@ -15,10 +15,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const app = (0, express_1.default)();
 const http = require("http").createServer(app);
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 3000;
 app.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.send("Express+ TypeScript Server");
 }));
 http.listen(port, () => {
+    console.log("Comments App");
     console.log(port);
 });
