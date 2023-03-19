@@ -1,9 +1,10 @@
 FROM node:14.17.6
-WORKDIR /app
+WORKDIR /src
 
 COPY ["package.json", "package-lock.json", "tsconfig.json", "./"]
 RUN npm install
-COPY ./ ./
+RUN npm link typescript
+COPY . .
 EXPOSE 8000
 
 CMD npm run dev
