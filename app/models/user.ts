@@ -29,7 +29,7 @@ const User = sequelizeConnection.define<UserAttributes>(
       unique: true,
     },
     username: {
-      allowNull: true,
+      allowNull: false,
       type: DataTypes.TEXT,
     },
     hashed_password: {
@@ -37,7 +37,7 @@ const User = sequelizeConnection.define<UserAttributes>(
       type: DataTypes.TEXT,
     },
     enail: {
-      allowNull: true,
+      allowNull: false,
       type: DataTypes.TEXT,
     },
     salt: {
@@ -47,15 +47,7 @@ const User = sequelizeConnection.define<UserAttributes>(
     image: {
       allowNull: true,
       type: DataTypes.TEXT,
-    },
-    numberOfPages: {
-      allowNull: false,
-      type: DataTypes.INTEGER,
-    },
-    authorId: {
-      allowNull: true,
-      type: DataTypes.UUID,
-    },
+    }
   }
 );
 
