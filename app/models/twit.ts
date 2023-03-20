@@ -3,24 +3,24 @@ import { DataTypes, Model, Optional } from 'sequelize'
 import { sequelizeConnection } from './index'
 
 
-interface UserAttributes {
+interface TwitAttributes {
   id: number;
-  username: string;
-  hashed_password: string;
+  text: string;
+  userId: number;
   image: string;
-  salt: string;
-  email: string;
+  file: string;
+  count_messages: number;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
 }
 
-export interface UserInput extends Optional<UserAttributes, 'id'> {}
-export interface UserOutput extends Model<UserAttributes> {}
+export interface TwitInput extends Optional<TwitAttributes, 'id'> {}
+export interface TwitOutput extends Model<TwitAttributes> {}
 
 
-const User = sequelizeConnection.define<UserOutput>(
-  'Book',
+const User = sequelizeConnection.define<TwitOutput>(
+  'Twit',
   {
     id: {
       allowNull: false,
@@ -29,21 +29,21 @@ const User = sequelizeConnection.define<UserOutput>(
       type: DataTypes.UUID,
       unique: true,
     },
-    username: {
+    text: {
       allowNull: false,
       type: DataTypes.TEXT,
     },
-    hashed_password: {
+    userId: {
+      allowNull: true,
+      type: DataTypes.UUID,
+    },
+    file: {
       allowNull: true,
       type: DataTypes.TEXT,
     },
-    email: {
-      allowNull: false,
-      type: DataTypes.TEXT,
-    },
-    salt: {
+    count_messages: {
       allowNull: true,
-      type: DataTypes.TEXT,
+      type: DataTypes.NUMBER,
     },
     image: {
       allowNull: true,
