@@ -19,9 +19,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       email: {
-        type: Sequelize.STRING,
-        unique: true
-      },
+        type: Sequelize.STRING,      },
       salt: {
         type: Sequelize.STRING
       },
