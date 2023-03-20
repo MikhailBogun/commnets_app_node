@@ -26,7 +26,6 @@ const MainRouter = () => {
 }
 
 const App = () => (
-  // const dispatch = useDispatch();
 
   <div className="App">
     <MainRouter></MainRouter>
