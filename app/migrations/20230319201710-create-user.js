@@ -16,15 +16,20 @@ module.exports = {
         unique: true
       },
       hashed_password:{
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: ""
       },
       email: {
-        type: Sequelize.STRING,      },
+        type: Sequelize.STRING,
+        defaultValue: ""
+      },
       salt: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: ""
       },
       image: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: ""
       },
       createdAt: {
         allowNull: false,

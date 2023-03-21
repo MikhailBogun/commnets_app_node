@@ -20,16 +20,20 @@ module.exports = {
         onDelete: 'SET NULL',
       },
       text: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue:""
       },
       image: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: ""
       },
       file: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: ""
       },
       count_messages: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        defaultValue: 0
       },
       createdAt: {
         allowNull: false,

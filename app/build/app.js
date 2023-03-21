@@ -13,9 +13,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const path = require('path');
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 const app = (0, express_1.default)();
 const http = require("http").createServer(app);
 const port = process.env.PORT || 3000;
+const comment_routes_1 = __importDefault(require("./routes/comment_routes"));
+let comments_controller = require(__dirname + "/controllers/comments/comment");
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use("/", express_1.default.static(__dirname + "/"));
+app.use('/', comment_routes_1.default);
+app.use(cors());
 app.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.send("Express+ TypeScript Server");
 }));

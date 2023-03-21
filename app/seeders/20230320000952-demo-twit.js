@@ -4,7 +4,6 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
     let data = getTestData(50)
-    console.log(data)
     return queryInterface.bulkInsert('Twits', data)
   },
 
@@ -14,12 +13,12 @@ module.exports = {
 };
 
 function getTestData(count) {
-  return [...Array(count).keys()].map(i => test(6))
+  return [...Array(count).keys()].map(i => jsonData(i))
 }
 
-function test(i) {
+function jsonData(i) {
  return  {
-    "text": 'Test' + i,
+    "text": 'Test' + i+100,
     "userId": 5,
     "count_messages": 0,
     "createdAt": new Date(),

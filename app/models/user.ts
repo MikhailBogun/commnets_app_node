@@ -1,6 +1,9 @@
 'use strict';
 import { DataTypes, Model, Optional } from 'sequelize'
-import { sequelizeConnection } from './index'
+import db from './index';
+import sequelize from 'sequelize';
+
+
 
 
 interface UserAttributes {
@@ -12,15 +15,32 @@ interface UserAttributes {
   email: string;
   createdAt?: Date;
   updatedAt?: Date;
-  deletedAt?: Date;
 }
 
-export interface UserInput extends Optional<UserAttributes, 'id'> {}
-export interface UserOutput extends Model<UserAttributes> {}
+// export interface UserInput extends Optional<UserAttributes, 'id'> {}
+// export interface UserOutput extends Model<UserAttributes> {}
+module.exports = (sequelize: any, DataTypes: any) => {
+class User extends Model<UserAttributes> implements UserAttributes{
+  public id!: number
+  public username!: string
+  public hashed_password!: string
+  public image!: string
+  public salt!: string
+  public email!: string
 
 
-const User = sequelizeConnection.define<UserOutput>(
-  'Book',
+  // timestamps!
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+
+  static associate(models: any) {
+    User.hasMany(models.Twit, { foreignKey: 'userId' });
+
+  }
+
+}
+
+User.init(
   {
     id: {
       allowNull: false,
@@ -49,7 +69,19 @@ const User = sequelizeConnection.define<UserOutput>(
       allowNull: true,
       type: DataTypes.TEXT,
     }
-  }
-);
+  },
+  {
+    sequelize: sequelize,
+    modelName: "User"
+    }
+)
 
-export default User;
+
+
+
+// User.hasOne(Twit, { sourceKey: 'userId' });
+
+return User;
+
+}
+
