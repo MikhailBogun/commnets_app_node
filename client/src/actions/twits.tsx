@@ -1,9 +1,7 @@
 import axios from "axios";
 import { setFetching, setTwits } from "../reducers/twitsReducer";
 
-
-const server: string = "localost:" + process.env.PORT;
-
+const server: string = "localost:3000";
 
 export const getTwits = (searchQuery:any = "", currentPage:number, perPage:number) => {
   const head = {
@@ -15,9 +13,6 @@ export const getTwits = (searchQuery:any = "", currentPage:number, perPage:numbe
       per_page: perPage,
       query: searchQuery
     }
-  };
-  if(searchQuery ===""){
-      searchQuery ="stars:%3E1";
   };
   return async (dispatch:any) => { 
           dispatch(setFetching(true));

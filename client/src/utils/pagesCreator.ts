@@ -1,4 +1,4 @@
-export function createPages(pages:number[], pagesCount:number, currentPage:number){
+export function createPages(pages:number[], pagesCount:any, currentPage:any){
   if(pagesCount > 10) {
       if(currentPage > 5) {
           for (let i = currentPage-4; i <= currentPage+5; i++) {
