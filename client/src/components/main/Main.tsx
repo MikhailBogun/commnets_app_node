@@ -13,12 +13,14 @@ const Main = () =>{
 
   const dispatch = useDispatch();
   const twits = useSelector((state:any) => state.twits.items);
-  const isFetching = useSelector((state:any) => state.repos.isFetching);
-  const currentPage:number = useSelector((state:any) => state.repos.currentPage);
-  const totalCount:number = useSelector((state:any) => state.repos.totalCount);
-  const perPage:number = useSelector((state:any) => state.repos.perPage);
+  const isFetching = useSelector((state:any) => state.twits.isFetching);
+  const currentPage:number = useSelector((state:any) => state.twits.currentPage);
+  const totalCount:number = useSelector((state:any) => state.twits.totalCount);
+  const perPage:number = useSelector((state:any) => state.twits.perPage);
 
   const [searchValue, setSearchValue] = useState("");
+
+  console.log(searchValue)
   const pagesCount = Math.ceil(totalCount/perPage)
   const pages:number[] = []
 
@@ -41,7 +43,7 @@ const Main = () =>{
       isFetching === false
       ?
       twits.map((twit:any) => 
-          <Twit key={twit.id} repo={twit}/>
+          <Twit key={twit.id} twit={twit}/>
       ) 
       :
       <div className="fetching"> </div>

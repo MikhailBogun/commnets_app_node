@@ -25,29 +25,28 @@ interface Twit {
 }
 
 interface TwitState {
-  items: Twit[],
+  twits: Twit[],
   isFetching: boolean,
   currentPage: number,
   perPage: number,
-  total_count: number
+  count: number
 }
 
 const defaultState:TwitState = {
-    items: [],
+    twits: [],
     isFetching: true,
     currentPage: 1,
     perPage: 10,
-    total_count:0
+    count:0
 }
 
 export default function twitsReducer(state=defaultState, action: TwitAction)  {
-
         switch (action.type) {
             case SET_REPOS:
                 return {
                     ...state,
-                    items: action.payload.items,
-                    totalCount: action.payload.total_count,
+                    items: action.payload.twits,
+                    totalCount: action.payload.count,
                     isFetching: false
                 }
             case SET_IS_FEATCHIN:

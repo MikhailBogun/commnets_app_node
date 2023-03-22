@@ -6,7 +6,7 @@ const Twit = (props: any) => {
   return (
       <div className="repo">
           <div className="repo-header">
-              <div className="repo-header-name">{twit.user.name}</div>
+              <div className="repo-header-name">{twit.username}</div>
               <div className="repo-header-stars">{twit.createdAt}</div>
           </div>
           <div className="repo-list-comit">{twit.text}</div>
