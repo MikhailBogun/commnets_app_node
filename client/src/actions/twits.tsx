@@ -8,10 +8,10 @@ export const getTwits = (searchQuery:any = "", currentPage:number, perPage:numbe
     method: 'get',
     url: 'http://127.0.0.1:3000/comments',
     headers: { 'Content-Type': 'application/json' },
-    data: {
+    params: {
       page: currentPage,
       per_page: perPage,
-      query: searchQuery
+      searchQuery: searchQuery
     }
   };
   return async (dispatch:any) => { 

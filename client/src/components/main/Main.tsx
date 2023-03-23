@@ -15,12 +15,11 @@ const Main = () =>{
   const twits = useSelector((state:any) => state.twits.items);
   const isFetching = useSelector((state:any) => state.twits.isFetching);
   const currentPage:number = useSelector((state:any) => state.twits.currentPage);
-  const totalCount:number = useSelector((state:any) => state.twits.totalCount);
+  const totalCount:number = useSelector((state:any) => state.twits.count);
   const perPage:number = useSelector((state:any) => state.twits.perPage);
 
   const [searchValue, setSearchValue] = useState("");
-
-  console.log(searchValue)
+  console.log(totalCount, perPage, currentPage)
   const pagesCount = Math.ceil(totalCount/perPage)
   const pages:number[] = []
 
@@ -28,6 +27,7 @@ const Main = () =>{
   useEffect(()=>{
       dispatch(getTwits(searchValue,currentPage,perPage) as any);
   }, [currentPage])
+
   function searchHandler(){
     dispatch(setCurrentPage(1))
     dispatch(getTwits(searchValue,currentPage,perPage) as any)
