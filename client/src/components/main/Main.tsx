@@ -25,19 +25,22 @@ const Main = () =>{
 
   createPages(pages, pagesCount, currentPage)
   useEffect(()=>{
-      dispatch(getTwits(searchValue,currentPage,perPage) as any);
+      dispatch(getTwits(searchValue,currentPage,perPage, 0) as any);
   }, [currentPage])
 
-  function searchHandler(){
+  function searchHandler(sort:number = 0){
     dispatch(setCurrentPage(1))
-    dispatch(getTwits(searchValue,currentPage,perPage) as any)
+    dispatch(getTwits(searchValue,currentPage,perPage,sort) as any)
 }
 
   return (
     <div >
       <div className="search">
-          <input value={searchValue} onChange={(e)=> setSearchValue(e.target.value)} type="text" placeholder="Input repo name" className="search-input" />
-          <button onClick={()=>{ searchHandler()}} className="search-button">Search</button>
+          {/* <input value={searchValue} onChange={(e)=> setSearchValue(e.target.value)} type="text" placeholder="Input repo name" className="search-input" /> */}
+          <button onClick={()=>{ searchHandler()}} className="search-button">CreateNewComment</button>
+          <button onClick={()=>{ searchHandler(1)}} className="search-button">SorthLogin</button>
+          <button onClick={()=>{ searchHandler(2)}} className="search-button">SortEmail</button>
+          <button onClick={()=>{ searchHandler(3)}} className="search-button">SortData</button>
       </div>
       { 
       isFetching === false

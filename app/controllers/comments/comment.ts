@@ -1,18 +1,23 @@
 import { RequestHandler, response } from 'express';
 
 import db from '../../models';
-import sequelize from 'sequelize';
 
+export const getTwits: RequestHandler = async (req, res, next) => {
+  try {
+    let data:any = req.query || "";
 
-
-
-  export const getTwits:RequestHandler =  async (req,res,next) => {
-        try{
-            let query = req.query || "";
-            let twits_array = await db.Twit.getTwits('',0,25);
-            let counts = await db.Twit.count();
-            res.json({"twits":twits_array,"counts":counts});
-        } catch(e){
-            next(e);
-        }
+    let query = {
+      searchQuery: data.searchQuery,
+      offset: (data.page - 1) * data.per_page,
+      limit: data.per_page,
+      sortType: data.sort_type && data.sort_type == 1 ? 'DESC' : "ASC",
+      sortField: data.sort_field ? data.sort_field : 0
     }
+    
+    let twits_array = await db.Twit.getTwits(query);
+    let counts = await db.Twit.count();
+    res.json({ "twits": twits_array, "counts": counts });
+  } catch (e) {
+    next(e);
+  }
+}

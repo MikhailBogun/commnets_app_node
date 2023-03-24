@@ -14,10 +14,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getTwits = void 0;
 const models_1 = __importDefault(require("../../models"));
+const sortHelper = {
+    field: ['id', 'username', 'email', 'createdAt']
+};
 const getTwits = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        let query = req.query || "";
-        let twits_array = yield models_1.default.Twit.getTwits('', 0, 25);
+        let data = req.query || "";
+        let query = {
+            searchQuery: data.searchQuery,
+            offset: (data.page - 1) * data.per_page,
+            limit: data.per_page,
+            sortType: data.sort_type && data.sort_type == 1 ? 'DESC' : "ASC",
+            sortField: data.sort_field ? data.sort_field : 0
+        };
+        let twits_array = yield models_1.default.Twit.getTwits(query);
         let counts = yield models_1.default.Twit.count();
         res.json({ "twits": twits_array, "counts": counts });
     }

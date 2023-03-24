@@ -17,12 +17,13 @@ const port = process.env.PORT || 3000;
 import commentRoutes from './routes/comment_routes';
 
 let comments_controller = require(__dirname + "/controllers/comments/comment");
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+
 app.use("/", express.static(__dirname + "/"));
 app.use('/', commentRoutes);
-app.use(cors());
 
 app.get('/', async (req: Request, res: Response) => {
   res.send("Express+ TypeScript Server")

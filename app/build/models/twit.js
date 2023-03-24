@@ -14,6 +14,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const index_1 = __importDefault(require("./index"));
+const sortHelper = {
+    field: [
+        '"Twits"."id" ',
+        '"Users"."username" ',
+        '"Users"."email" ',
+        '"Twits"."createdAt" '
+    ]
+};
 // export interface TwitInput extends Optional<TwitAttributes, 'id'> {}
 // export interface TwitOutput extends Required<TwitAttributes> {}
 module.exports = (sequelize, DataTypes) => {
@@ -21,18 +29,19 @@ module.exports = (sequelize, DataTypes) => {
         static associate(models) {
             Twit.belongsTo(models.User, { foreignKey: 'userId' });
         }
-        static getTwits(query, start_point, count) {
+        static getTwits(query) {
             return __awaiter(this, void 0, void 0, function* () {
-                let db_query = ` SELECT "Twits".*, "Users"."username"
+                let sort_line = '\n ORDER BY ' + sortHelper.field[query.sortField] + query.sortType + ' \n';
+                let db_query = ` SELECT "Twits".*, "Users"."username", "Users"."email"
                                   FROM "Twits"
                                       LEFT JOIN "Users"
-                                      ON "Twits"."userId" = "Users".id
-                                  ORDER BY "Twits"."id" ASC
-                                  LIMIT :limit OFFSET :offset`;
+                                      ON "Twits"."userId" = "Users".id`
+                    + sort_line +
+                    `LIMIT :limit OFFSET :offset`;
                 let replacements = {
                     replacements: {
-                        "limit": count,
-                        "offset": start_point
+                        "limit": query.limit,
+                        "offset": query.offset
                     },
                     type: sequelize_1.QueryTypes.SELECT
                 };

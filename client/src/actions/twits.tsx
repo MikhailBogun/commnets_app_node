@@ -3,7 +3,7 @@ import { setFetching, setTwits } from "../reducers/twitsReducer";
 
 const server: string = "localost:3000";
 
-export const getTwits = (searchQuery:any = "", currentPage:number, perPage:number) => {
+export const getTwits = (searchQuery:any = "", currentPage:number, perPage:number, sort: number) => {
   const head = {
     method: 'get',
     url: 'http://127.0.0.1:3000/comments',
@@ -11,7 +11,8 @@ export const getTwits = (searchQuery:any = "", currentPage:number, perPage:numbe
     params: {
       page: currentPage,
       per_page: perPage,
-      searchQuery: searchQuery
+      searchQuery: searchQuery,
+      sort_field: sort
     }
   };
   return async (dispatch:any) => { 

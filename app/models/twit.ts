@@ -16,6 +16,16 @@ interface TwitAttributes {
   updatedAt?: Date;
 }
 
+
+const sortHelper = {
+  field: [
+    '"Twits"."id" ',
+    '"Users"."username" ', 
+    '"Users"."email" ', 
+    '"Twits"."createdAt" '
+  ]
+}
+
 // export interface TwitInput extends Optional<TwitAttributes, 'id'> {}
 // export interface TwitOutput extends Required<TwitAttributes> {}
 module.exports = (sequelize: any, DataTypes: any) => {
@@ -35,19 +45,20 @@ module.exports = (sequelize: any, DataTypes: any) => {
       Twit.belongsTo(models.User, { foreignKey: 'userId' });
     }
 
-     public static async getTwits(query:string, start_point:number, count:number) {
-      let db_query:string =     ` SELECT "Twits".*, "Users"."username"
+     public static async getTwits(query) {
+
+      let sort_line:string = '\n ORDER BY ' + sortHelper.field[query.sortField] + query.sortType + ' \n';
+      let db_query:string =     ` SELECT "Twits".*, "Users"."username", "Users"."email"
                                   FROM "Twits"
                                       LEFT JOIN "Users"
-                                      ON "Twits"."userId" = "Users".id
-                                  ORDER BY "Twits"."id" ASC
-                                  LIMIT :limit OFFSET :offset`;
+                                      ON "Twits"."userId" = "Users".id`
+                                  + sort_line +
+                                  `LIMIT :limit OFFSET :offset`;
       let replacements =  {
                         replacements :
                         { 
-                          "limit":count,
-                          "offset" : start_point
-                        },
+                          "limit":query.limit,
+                          "offset" : query.offset                        },
                         type: QueryTypes.SELECT
                       };
                       
