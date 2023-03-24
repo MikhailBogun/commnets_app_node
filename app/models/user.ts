@@ -35,7 +35,7 @@ class User extends Model<UserAttributes> implements UserAttributes{
 
   static associate(models: any) {
     User.hasMany(models.Twit, { foreignKey: 'userId' });
-
+    User.hasMany(models.Comment, { foreignKey: 'userId' });
   }
 
 }

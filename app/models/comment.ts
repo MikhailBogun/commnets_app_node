@@ -1,14 +1,15 @@
 'use strict';
 import { DataTypes, Model, Optional, QueryTypes } from 'sequelize'
 import db from './index'
-import sequelize from 'sequelize';
 
 
 
-interface TwitAttributes {
+interface CommentAttributes {
   id: number;
   text: string;
   userId: number;
+  twitId: number,
+  parentId: number,
   image: string;
   file: string;
   count_messages: number;
@@ -17,21 +18,14 @@ interface TwitAttributes {
 }
 
 
-const sortHelper = {
-  field: [
-    '"Twits"."id" ',
-    '"Users"."username" ', 
-    '"Users"."email" ', 
-    '"Twits"."createdAt" '
-  ]
-}
-
 // export interface TwitInput extends Optional<TwitAttributes, 'id'> {}
 // export interface TwitOutput extends Required<TwitAttributes> {}
 module.exports = (sequelize: any, DataTypes: any) => {
-  class Twit extends Model<TwitAttributes> implements TwitAttributes{
+  class Comment extends Model<CommentAttributes> implements CommentAttributes{
     public id!: number
     public userId!: number
+    public twitId!: number
+    public parentId!: number
     public text!: string
     public image!: string
     public count_messages!: number
@@ -42,33 +36,12 @@ module.exports = (sequelize: any, DataTypes: any) => {
     public readonly updatedAt!: Date;
 
     static associate(models: any) {
-      Twit.belongsTo(models.User, { foreignKey: 'userId' });
-      Twit.hasMany(models.Comment, { foreignKey: 'twitId' });
+      Comment.belongsTo(models.User, { foreignKey: 'userId' });
+      Comment.belongsTo(models.Twit, { foreignKey: 'twitId' });
 
-    }
-
-     public static async getTwits(query) {
-
-      let sort_line:string = '\n ORDER BY ' + sortHelper.field[query.sortField] + query.sortType + ' \n';
-      let db_query:string =     ` SELECT "Twits".*, "Users"."username", "Users"."email"
-                                  FROM "Twits"
-                                      LEFT JOIN "Users"
-                                      ON "Twits"."userId" = "Users".id`
-                                  + sort_line +
-                                  `LIMIT :limit OFFSET :offset`;
-      let replacements =  {
-                        replacements :
-                        { 
-                          "limit":query.limit,
-                          "offset" : query.offset                        },
-                        type: QueryTypes.SELECT
-                      };
-                      
-       return await db.sequelize.query(db_query,replacements)
     }
   }
-
-  Twit.init(
+  Comment.init(
     {
       id: {
         allowNull: false,
@@ -82,6 +55,14 @@ module.exports = (sequelize: any, DataTypes: any) => {
         type: DataTypes.TEXT,
       },
       userId: {
+        allowNull: true,
+        type: DataTypes.UUID,
+      },
+      twitId: {
+        allowNull: true,
+        type: DataTypes.UUID,
+      },
+      parentId: {
         allowNull: true,
         type: DataTypes.UUID,
       },
@@ -101,8 +82,8 @@ module.exports = (sequelize: any, DataTypes: any) => {
     {
       timestamps: true,
       sequelize: sequelize,
-      modelName: "Twit"    }
+      modelName: "Comment"    }
   )
 
-  return Twit
+  return Comment
 }
